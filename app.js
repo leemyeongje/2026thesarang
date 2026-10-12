@@ -48,6 +48,9 @@ const pinned = $(".pinned", detail);
 const card = $(".card", detail);
 const glares = detail.querySelectorAll(".glare");
 const sermonEl = $(".sermon", detail);
+const stage = $(".stage", detail);
+const hint = $(".scroll-hint", detail);
+const pending = $(".sermon-pending", detail);
 let current = null;
 let anim = null;
 
@@ -74,6 +77,8 @@ function render(d) {
   pinned.classList.remove("scrolled");
   scrolledToSermon = false;
   sermonEl.innerHTML = "";
+  hint.hidden = pending.hidden = true;
+  hint.classList.remove("away");
   loadSermon(d);
 }
 
@@ -137,8 +142,9 @@ let scrolledToSermon = false;
 scroller.addEventListener("scroll", () => {
   const y = scroller.scrollTop;
   pinned.classList.toggle("scrolled", y > 8);
-  const h = card.offsetHeight; // 카드가 40% 정도 올라가면 뒤집기 (화면에 보이는 동안)
-  const past = y > h * (scrolledToSermon ? 0.2 : 0.4);
+  hint.classList.toggle("away", y > 40);
+  const h = stage.offsetHeight; // 설교가 올라오기 시작하고 카드가 아직 보일 때 뒤집기
+  const past = y > h * (scrolledToSermon ? 0.15 : 0.3);
   if (past === scrolledToSermon) return;
   scrolledToSermon = past;
   if (isBack() !== past) flipTo((Math.round(angle / 180) + (past ? 1 : -1)) * 180);
@@ -209,6 +215,10 @@ card.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight") flip();
 });
 
+hint.addEventListener("click", () => {
+  scroller.scrollTo({ top: sermonEl.offsetTop - $(".pinned", detail).offsetHeight - 12, behavior: "smooth" });
+});
+
 /* ---------- 설교 영상 + AI 요약 ---------- */
 const sermonCache = new Map();
 function fetchSermon(n) {
@@ -225,7 +235,8 @@ async function loadSermon(d) {
   if (current !== d) return;
   const parsed = md && parseSermon(md);
   if (!parsed || (!parsed.videoId && !parsed.html)) {
-    sermonEl.innerHTML = `<p class="sermon-pending">설교 영상과 요약은 ${d.label} 새벽예배 후에 올라옵니다.</p>`;
+    pending.textContent = `설교 영상과 요약은 ${d.label} 새벽예배 후에 올라옵니다.`;
+    pending.hidden = false;
     return;
   }
   let html = "";
@@ -234,6 +245,7 @@ async function loadSermon(d) {
   }
   if (parsed.html) html += `<article class="summary">${parsed.html}</article>`;
   sermonEl.innerHTML = html;
+  hint.hidden = false;
 
   if (parsed.videoId) {
     // 열리는 애니메이션이 끝난 뒤에 iframe을 붙여 전환을 매끄럽게 유지

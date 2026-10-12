@@ -282,10 +282,39 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .detail-day small { font-size: .82em; opacity: .75; margin-left: 8px; }
 
+/* 첫 화면: 카드가 화면 가운데, 아래로 설교가 이어짐 */
 .stage {
   width: min(100% - 32px, 640px);
-  margin: 12px auto 0;
+  min-height: calc(100vh - 60px - env(safe-area-inset-top));
+  min-height: calc(100svh - 60px - env(safe-area-inset-top));
+  margin: 0 auto;
+  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   perspective: 1400px;
+}
+.stage-foot {
+  height: 64px;
+  display: grid;
+  place-items: center;
+}
+.scroll-hint {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-top: 12px;
+  border-radius: 50%;
+  opacity: .75;
+  transition: opacity .4s;
+}
+.scroll-hint[hidden] { display: none; }
+.scroll-hint svg { width: 26px; height: 26px; animation: nudge 2.2s ease-in-out infinite; }
+.scroll-hint.away { opacity: 0; pointer-events: none; }
+@keyframes nudge {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(5px); }
 }
 .card {
   position: relative;
@@ -325,10 +354,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .sermon {
   width: min(100% - 32px, 640px);
-  margin: 26px auto 0;
+  margin: 0 auto;
 }
 .sermon-pending {
-  margin: 8px 0 0;
+  margin: 12px 0 0;
   text-align: center;
   font-size: 14px;
   line-height: 1.6;

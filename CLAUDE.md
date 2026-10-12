@@ -22,7 +22,8 @@ The site is plain HTML/CSS/JS (`index.html`, `style.css`, `app.js`) with no buil
   - Routing is hash-based (`#day1`–`#day6`), so deep links and the browser back button work.
   - It contains the flippable scripture card, the YouTube embed, and the AI summary.
 - **Card flip:** the card is a `preserve-3d` element with two `.face` children (`.is-front` / `.is-back`). Only the header is pinned (`.pinned`, sticky); the card scrolls away with the content, which the user asked for.
-  - Scrolling down past 40% of the card's height snaps it to the back, so the flip happens while the card is still visible. Scrolling back above 20% snaps it to the front. This is a discrete flip, not scroll-scrubbed.
+  - `.stage` fills the first screen (`100svh` minus the header) with the card vertically centered. Below the card, `.stage-foot` holds either a bobbing down-arrow (`.scroll-hint`, which scrolls to the sermon) or, when there is no sermon, the pending note.
+  - Scrolling down past 30% of the stage's height snaps the card to the back while it is still visible; scrolling back above 15% snaps it to the front. This is a discrete flip, not scroll-scrubbed.
   - Tap, horizontal drag, and the keyboard also flip it. These matter for days without a sermon, where there is nothing to scroll.
   - The user asked for no side-indicator dots.
   - On open, a short "peek" wiggle hints that the card can be turned.
