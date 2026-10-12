@@ -137,7 +137,8 @@ let scrolledToSermon = false;
 scroller.addEventListener("scroll", () => {
   const y = scroller.scrollTop;
   pinned.classList.toggle("scrolled", y > 8);
-  const past = y > (scrolledToSermon ? 60 : 120);
+  const h = card.offsetHeight; // 카드가 40% 정도 올라가면 뒤집기 (화면에 보이는 동안)
+  const past = y > h * (scrolledToSermon ? 0.2 : 0.4);
   if (past === scrolledToSermon) return;
   scrolledToSermon = past;
   if (isBack() !== past) flipTo((Math.round(angle / 180) + (past ? 1 : -1)) * 180);
