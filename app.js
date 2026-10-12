@@ -23,6 +23,19 @@ $("#days").innerHTML = DAYS.map((d) => `<li><a class="day" href="day${d.n}" data
     <span class="day-n">DAY.${d.n}</span><span class="day-d">${d.label}</span>
   </a></li>`).join("");
 
+// 오늘(한국 시간)에 해당하는 날의 원을 칠해 둡니다.
+function markToday() {
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(new Date());
+  document.querySelectorAll(".day").forEach((el) => {
+    const isToday = DAYS[el.dataset.n - 1].date === today;
+    el.classList.toggle("is-today", isToday);
+    if (isToday) el.setAttribute("aria-current", "date");
+    else el.removeAttribute("aria-current");
+  });
+}
+markToday();
+document.addEventListener("visibilitychange", () => { if (!document.hidden) markToday(); });
+
 // 월계수 가지: 줄기를 따라 잎을 배치
 (function buildLaurel() {
   const P0 = [30, 70], C = [10, 50], P1 = [12, 6];

@@ -219,6 +219,13 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .day:hover::before { transform: rotate(24deg); border-color: var(--ink); }
 }
 .day:focus-visible::before { border: 2px solid var(--ink); }
+.day.is-today { color: var(--cream); }
+.day.is-today > span { position: relative; }
+.day.is-today::before {
+  background: var(--earth);
+  border: 1.6px solid var(--earth);
+  box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.6px var(--earth);
+}
 .day:active { transform: scale(.95); }
 
 /* ---------- Detail ---------- */
