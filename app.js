@@ -144,7 +144,7 @@ scroller.addEventListener("scroll", () => {
   pinned.classList.toggle("scrolled", y > 8);
   hint.classList.toggle("away", y > 40);
   const h = stage.offsetHeight; // 설교가 올라오기 시작하고 카드가 아직 보일 때 뒤집기
-  const past = y > h * (scrolledToSermon ? 0.15 : 0.3);
+  const past = y > h * (scrolledToSermon ? 0.1 : 0.2);
   if (past === scrolledToSermon) return;
   scrolledToSermon = past;
   if (isBack() !== past) flipTo((Math.round(angle / 180) + (past ? 1 : -1)) * 180);
