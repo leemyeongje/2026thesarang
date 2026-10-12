@@ -48,7 +48,6 @@ const pinned = $(".pinned", detail);
 const card = $(".card", detail);
 const glares = detail.querySelectorAll(".glare");
 const sermonEl = $(".sermon", detail);
-const hint = $(".scroll-hint", detail);
 const pending = $(".sermon-pending", detail);
 let current = null;
 let anim = null;
@@ -78,8 +77,7 @@ function render(d) {
   scroller.scrollTop = 0;
   pinned.classList.remove("scrolled");
   sermonEl.innerHTML = "";
-  hint.hidden = pending.hidden = true;
-  hint.classList.remove("away");
+  pending.hidden = true;
   loadSermon(d);
 }
 
@@ -140,11 +138,7 @@ addEventListener("popstate", () => {
   if (n) open(n); else close();
 });
 addEventListener("keydown", (e) => { if (e.key === "Escape" && current) $(".back", detail).click(); });
-scroller.addEventListener("scroll", () => {
-  const y = scroller.scrollTop;
-  pinned.classList.toggle("scrolled", y > 8);
-  hint.classList.toggle("away", y > 40);
-}, { passive: true });
+scroller.addEventListener("scroll", () => pinned.classList.toggle("scrolled", scroller.scrollTop > 8), { passive: true });
 
 
 /* ---------- 말씀 카드 뒤집기 ---------- */
@@ -210,10 +204,6 @@ card.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight") flip();
 });
 
-hint.addEventListener("click", () => {
-  scroller.scrollTo({ top: sermonEl.offsetTop - $(".pinned", detail).offsetHeight - 12, behavior: "smooth" });
-});
-
 /* ---------- 설교 영상 + AI 요약 ---------- */
 const sermonCache = new Map();
 function fetchSermon(n) {
@@ -240,7 +230,6 @@ async function loadSermon(d) {
   }
   if (parsed.html) html += `<article class="summary">${parsed.html}</article>`;
   sermonEl.innerHTML = html;
-  hint.hidden = false;
 
   if (parsed.videoId) {
     // 열리는 애니메이션이 끝난 뒤에 iframe을 붙여 전환을 매끄럽게 유지
