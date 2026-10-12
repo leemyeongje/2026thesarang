@@ -148,13 +148,13 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   font-size: clamp(25px, 7vw, 32px);
   line-height: 1.12;
   letter-spacing: .02em;
-  padding-top: 4px;
+  padding-top: 12%;
 }
 .emblem-stars {
   position: absolute;
   left: 50%;
-  top: -18px;
-  width: 30px;
+  top: 13%;
+  width: 24%;
   transform: translateX(-50%);
   fill: var(--ink);
 }
