@@ -1,0 +1,92 @@
+<!doctype html>
+<!-- tools/build_day_pages.py가 index.html에서 생성한 파일입니다. 직접 고치지 마세요. -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>DAY.6 하나님의 사랑에서 끊을 수 없으리라 · 2026 가을특별새벽부흥회</title>
+  <meta name="description" content="하나님의 사랑에서 끊을 수 없으리라 · 2026.10.12(월)–17(토) 더THE사랑교회 본당">
+  <meta name="theme-color" content="#3b2c17">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DAY.6 하나님의 사랑에서 끊을 수 없으리라">
+  <meta property="og:description" content="10.17(토) · 롬 8:38-39 · 2026 가을특별새벽부흥회">
+  <meta property="og:image" content="bible_cards/day6_f.jpg">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Cafe24ClassicType-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/bg.webp" as="image">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <main id="home">
+    <header class="hero">
+      <p class="hero-eyebrow">2026 가을특별새벽부흥회</p>
+      <h1 class="hero-title">하나님의 사랑에서<br>끊을 수 없으리라</h1>
+      <dl class="hero-info">
+        <div><dt>일시</dt><dd><span class="serif">2026.10.12</span>(월)<span class="serif">-17</span>(토) <span class="nowrap">월~금 새벽 5:00, 토 새벽 6:00</span></dd></div>
+        <div><dt>장소</dt><dd>더THE사랑교회 본당</dd></div>
+      </dl>
+      <blockquote class="hero-verse">
+        <p>내가 확신하노니 사망이나 생명이나<br>
+          천사들이나 권세자들이나 현재 일이나 장래 일이나<br>
+          능력이나 높음이나 깊음이나 다른 어떤 피조물이라도<br>
+          우리를 우리 주 그리스도 예수 안에 있는<br>
+          하나님의 사랑에서 끊을 수 없으리라</p>
+        <cite>(로마서 8:38-39)</cite>
+      </blockquote>
+    </header>
+
+    <section class="board" aria-labelledby="board-title">
+      <div class="emblem">
+        <svg class="emblem-stars" viewBox="0 0 44 12" aria-hidden="true"><use href="#star" x="0" y="2"/><use href="#star" x="16" y="0"/><use href="#star" x="32" y="2"/></svg>
+        <svg class="laurel laurel-l" viewBox="0 0 40 72" aria-hidden="true"><use href="#laurel"/></svg>
+        <svg class="laurel laurel-r" viewBox="0 0 40 72" aria-hidden="true"><use href="#laurel"/></svg>
+        <h2 id="board-title" class="emblem-ring">출석<br>체크</h2>
+      </div>
+      <p class="board-note">날짜를 눌러 그날의 말씀을 확인하세요.</p>
+      <ol class="days" id="days"></ol>
+    </section>
+  </main>
+
+  <section id="detail" class="detail" hidden aria-modal="true" role="dialog" aria-labelledby="detail-title">
+    <div class="detail-scroll" tabindex="-1">
+      <div class="pinned">
+        <header class="detail-bar">
+          <button class="back" type="button" aria-label="출석판으로 돌아가기">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <h2 id="detail-title" class="detail-day"></h2>
+        </header>
+      </div>
+
+      <div class="stage">
+        <div class="card" tabindex="0" role="button" aria-label="말씀 카드 뒤집기">
+          <div class="face is-front"><img alt="" decoding="async"><i class="glare"></i></div>
+          <div class="face is-back"><img alt="" decoding="async"><i class="glare"></i></div>
+        </div>
+        <p class="flip-note">카드를 눌러 뒤집어 보세요</p>
+        <div class="stage-foot">
+          <button class="scroll-hint" type="button" aria-label="설교 보기" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="sermon-pending" hidden></p>
+        </div>
+      </div>
+
+      <div class="sermon" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <path id="star" d="M6 0l1.76 3.58 3.94.57-2.85 2.78.67 3.93L6 9.01 2.48 10.86l.67-3.93L.3 4.15l3.94-.57z"/>
+      <g id="laurel"></g>
+    </defs>
+  </svg>
+
+  <script src="app.js"></script>
+</body>
+</html>

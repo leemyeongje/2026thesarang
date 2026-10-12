@@ -19,7 +19,7 @@ const $ = (s, el = document) => el.querySelector(s);
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- 출석판 ---------- */
-$("#days").innerHTML = DAYS.map((d) => `<li><a class="day" href="#day${d.n}" data-n="${d.n}" aria-label="DAY.${d.n} ${d.label} ${d.title}">
+$("#days").innerHTML = DAYS.map((d) => `<li><a class="day" href="day${d.n}" data-n="${d.n}" aria-label="DAY.${d.n} ${d.label} ${d.title}">
     <span class="day-n">DAY.${d.n}</span><span class="day-d">${d.label}</span>
   </a></li>`).join("");
 
@@ -48,7 +48,6 @@ const pinned = $(".pinned", detail);
 const card = $(".card", detail);
 const glares = detail.querySelectorAll(".glare");
 const sermonEl = $(".sermon", detail);
-const stage = $(".stage", detail);
 const hint = $(".scroll-hint", detail);
 const pending = $(".sermon-pending", detail);
 let current = null;
@@ -65,7 +64,10 @@ function clipFrames(n) {
   return [`circle(${c.r}px at ${c.x}px ${c.y}px)`, `circle(${far}px at ${c.x}px ${c.y}px)`];
 }
 
+const homeTitle = "2026 가을특별새벽부흥회 · 더THE사랑교회";
+
 function render(d) {
+  document.title = `DAY.${d.n} ${d.title} · 2026 가을특별새벽부흥회`;
   $("#detail-title").innerHTML = `DAY.${d.n}<small>${d.label}</small>`;
   const [front, back] = card.querySelectorAll("img");
   front.src = `assets/cards/day${d.n}_f.webp`;
@@ -75,7 +77,6 @@ function render(d) {
   setAngle(0, false);
   scroller.scrollTop = 0;
   pinned.classList.remove("scrolled");
-  scrolledToSermon = false;
   sermonEl.innerHTML = "";
   hint.hidden = pending.hidden = true;
   hint.classList.remove("away");
@@ -107,6 +108,7 @@ function close(animate = true) {
   const n = current.n;
   current = null;
   const done = () => {
+    document.title = homeTitle;
     detail.hidden = true;
     document.documentElement.classList.remove("lock");
     sermonEl.innerHTML = ""; // 영상 재생 중지
@@ -118,36 +120,30 @@ function close(animate = true) {
   a.finished.then(() => { if (current) return; done(); a.cancel(); }).catch(() => {});
 }
 
-/* ---------- 라우팅 (#dayN) ---------- */
-const dayFromHash = () => Number((location.hash.match(/^#day([1-6])$/) || [])[1]) || null;
+/* ---------- 라우팅 (/dayN) ----------
+   GitHub Pages는 /day1 요청에 day1.html을 내려주므로, 같은 앱이 그 주소에서도 열립니다. */
+const dayFromPath = () => Number((location.pathname.match(/\/day([1-6])(?:\.html)?\/?$/) || [])[1]) || null;
 
 document.addEventListener("click", (e) => {
   const a = e.target.closest(".day");
   if (!a || e.metaKey || e.ctrlKey) return;
   e.preventDefault();
-  history.pushState({ day: +a.dataset.n }, "", `#day${a.dataset.n}`);
+  history.pushState({ day: +a.dataset.n }, "", `day${a.dataset.n}`);
   open(+a.dataset.n);
 });
 $(".back", detail).addEventListener("click", () => {
   if (history.state?.day) history.back();
-  else { history.replaceState(null, "", location.pathname + location.search); close(); }
+  else { history.replaceState(null, "", "./"); close(); }
 });
 addEventListener("popstate", () => {
-  const n = dayFromHash();
+  const n = dayFromPath();
   if (n) open(n); else close();
 });
 addEventListener("keydown", (e) => { if (e.key === "Escape" && current) $(".back", detail).click(); });
-// 설교 쪽으로 스크롤해 내려가면 카드가 뒷면(말씀)으로 휙 뒤집히고, 다시 올라오면 앞면으로
-let scrolledToSermon = false;
 scroller.addEventListener("scroll", () => {
   const y = scroller.scrollTop;
   pinned.classList.toggle("scrolled", y > 8);
   hint.classList.toggle("away", y > 40);
-  const h = stage.offsetHeight; // 설교가 올라오기 시작하고 카드가 아직 보일 때 뒤집기
-  const past = y > h * (scrolledToSermon ? 0.1 : 0.2);
-  if (past === scrolledToSermon) return;
-  scrolledToSermon = past;
-  if (isBack() !== past) flipTo((Math.round(angle / 180) + (past ? 1 : -1)) * 180);
 }, { passive: true });
 
 
@@ -162,7 +158,6 @@ function setAngle(a, smooth = true) {
   const g = `${-60 + 60 * (1 - Math.cos((a * Math.PI) / 180))}%`;
   glares.forEach((el) => el.style.setProperty("--glare", g));
 }
-const isBack = () => Math.abs(Math.round(angle / 180)) % 2 === 1;
 const flipTo = (a) => { peekAnim?.cancel(); setAngle(a); };
 const flip = () => flipTo((Math.round(angle / 180) + 1) * 180);
 
@@ -294,4 +289,4 @@ function parseSermon(md) {
   });
 });
 
-if (dayFromHash()) open(dayFromHash(), false);
+if (dayFromPath()) open(dayFromPath(), false);

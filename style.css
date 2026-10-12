@@ -282,20 +282,27 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .detail-day small { font-size: .82em; opacity: .75; margin-left: 8px; }
 
-/* 첫 화면: 카드가 화면 가운데, 아래로 설교가 이어짐 */
+/* 첫 화면: 카드가 가운데쯤, 그 아래로 설교가 바로 이어짐 */
 .stage {
   width: min(100% - 32px, 640px);
-  min-height: calc(100vh - 60px - env(safe-area-inset-top));
-  min-height: calc(100svh - 60px - env(safe-area-inset-top));
+  min-height: 56vh;
+  min-height: 56svh;
   margin: 0 auto;
-  padding-bottom: 24px;
+  padding-bottom: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   perspective: 1400px;
 }
+.flip-note {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 12.5px;
+  letter-spacing: -.01em;
+  opacity: .6;
+}
 .stage-foot {
-  height: 64px;
+  height: 52px;
   display: grid;
   place-items: center;
 }
@@ -304,9 +311,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   place-items: center;
   width: 44px;
   height: 44px;
-  margin-top: 12px;
   border-radius: 50%;
-  opacity: .75;
+  opacity: .7;
   transition: opacity .4s;
 }
 .scroll-hint[hidden] { display: none; }
@@ -357,7 +363,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   margin: 0 auto;
 }
 .sermon-pending {
-  margin: 12px 0 0;
+  margin: 0;
   text-align: center;
   font-size: 14px;
   line-height: 1.6;
