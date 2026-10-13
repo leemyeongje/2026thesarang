@@ -164,9 +164,9 @@ $(".share", detail).addEventListener("click", async () => {
   if (!current) return;
   const d = current;
   const url = new URL(`day${d.n}`, location.href).href;
-  const title = `DAY.${d.n} ${d.title}`;
   if (navigator.share) {
-    try { await navigator.share({ title, text: `2026 가을특별새벽부흥회 ${d.label} ${title}`, url }); }
+    // 날짜·구절은 링크 미리보기(og 태그)에 이미 나오므로 문구는 짧게, title은 앱이 본문 앞에 덧붙여 겹치므로 생략
+    try { await navigator.share({ text: `2026 가을특별새벽부흥회 DAY.${d.n} ${d.title}`, url }); }
     catch (e) { if (e.name !== "AbortError") toast("공유하지 못했어요"); }
     return;
   }

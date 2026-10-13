@@ -11,6 +11,7 @@ import re
 from html import escape
 from pathlib import Path
 
+SITE = "https://leemyeongje.github.io/2026thesarang/"  # 카카오톡 미리보기는 절대 주소가 필요
 root = Path(__file__).resolve().parent.parent
 index = (root / "index.html").read_text(encoding="utf-8")
 app = (root / "app.js").read_text(encoding="utf-8")
@@ -30,7 +31,8 @@ for n, label, title, ref in days:
     page = sub_once(r"<title>.*?</title>", f"<title>DAY.{n} {escape(title)} · 2026 가을특별새벽부흥회</title>", page)
     page = sub_once(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="DAY.{n} {escape(title)}">', page)
     page = sub_once(r'<meta property="og:description" content="[^"]*">', f'<meta property="og:description" content="{label} · {escape(ref)} · 2026 가을특별새벽부흥회">', page)
-    page = sub_once(r'<meta property="og:image" content="[^"]*">', f'<meta property="og:image" content="bible_cards/day{n}_f.jpg">', page)
+    page = sub_once(r'<meta property="og:url" content="[^"]*">', f'<meta property="og:url" content="{SITE}day{n}">', page)
+    page = sub_once(r'<meta property="og:image" content="[^"]*">', f'<meta property="og:image" content="{SITE}bible_cards/day{n}_f.jpg">', page)
     page = page.replace("<!doctype html>", "<!doctype html>\n<!-- tools/build_day_pages.py가 index.html에서 생성한 파일입니다. 직접 고치지 마세요. -->", 1)
     (root / f"day{n}.html").write_text(page, encoding="utf-8")
     print(f"day{n}.html")

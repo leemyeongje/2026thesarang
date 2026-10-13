@@ -49,7 +49,7 @@ The site is plain HTML/CSS/JS (`index.html`, `style.css`, `app.js`) with no buil
 - `assets/` holds the files the site serves. They were generated from the originals with Python/PIL:
   - `assets/cards/*.webp`: converted copies of `bible_cards/*.jpg`.
   - `assets/bg.webp`: `horizontal poster.png` with its text patched out using clean texture, which leaves the texture and the handclasp. It is used as the fixed backdrop.
-  - `assets/og.jpg`: the share image. `og:image` is a relative path; change it to an absolute URL after deploying so KakaoTalk previews work.
+  - `assets/og.jpg`: the share image. `og:image` and `og:url` are absolute URLs under https://leemyeongje.github.io/2026thesarang/ (KakaoTalk previews need absolute URLs). The day pages get theirs from `SITE` in `tools/build_day_pages.py`.
 - If a card image changes, regenerate its webp (for example with PIL: `Image.open(src).convert('RGB').save(dst, quality=82)`).
 - The originals (`bible_cards/`, the poster, and the attendance photo) are source material and are not referenced by the page.
 
