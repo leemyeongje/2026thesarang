@@ -103,17 +103,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 @media (min-width: 900px) {
   .hero { min-height: min(39vw, 750px); padding-top: calc(7vw + env(safe-area-inset-top)); }
-  .hero-verse {
-    position: absolute;
-    left: 6%;
-    top: 40%;
-    margin: 0;
-    text-align: left;
-    font-size: 14px;
-  }
-}
-@media (min-width: 900px) and (max-width: 1279px) {
-  .hero-verse { position: static; margin: 34px auto 0; text-align: center; }
+  .hero-verse { font-size: 14px; }
 }
 
 /* ---------- Attendance board ---------- */
