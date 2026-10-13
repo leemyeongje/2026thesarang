@@ -150,6 +150,29 @@ addEventListener("popstate", () => {
   const n = dayFromPath();
   if (n) open(n); else close();
 });
+
+/* ---------- 공유: 휴대폰은 공유 시트, 그 외에는 링크 복사 ---------- */
+let toastTimer;
+function toast(msg) {
+  const t = $(".toast", detail);
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 1800);
+}
+$(".share", detail).addEventListener("click", async () => {
+  if (!current) return;
+  const d = current;
+  const url = new URL(`day${d.n}`, location.href).href;
+  const title = `DAY.${d.n} ${d.title}`;
+  if (navigator.share) {
+    try { await navigator.share({ title, text: `2026 가을특별새벽부흥회 ${d.label} ${title}`, url }); }
+    catch (e) { if (e.name !== "AbortError") toast("공유하지 못했어요"); }
+    return;
+  }
+  try { await navigator.clipboard.writeText(url); toast("링크를 복사했어요"); }
+  catch { toast("링크를 복사하지 못했어요"); }
+});
 addEventListener("keydown", (e) => { if (e.key === "Escape" && current) $(".back", detail).click(); });
 scroller.addEventListener("scroll", () => pinned.classList.toggle("scrolled", scroller.scrollTop > 8), { passive: true });
 

@@ -259,7 +259,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   align-items: center;
   padding: calc(8px + env(safe-area-inset-top)) 8px 8px;
 }
-.back {
+.back, .share {
   display: grid;
   place-items: center;
   width: 44px;
@@ -268,8 +268,25 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   transition: background .2s;
 }
 .back svg { width: 24px; height: 24px; }
-.back:active { background: rgba(255, 255, 255, .12); }
-@media (hover: hover) { .back:hover { background: rgba(255, 255, 255, .1); } }
+.share svg { width: 22px; height: 22px; }
+.back:active, .share:active { background: rgba(255, 255, 255, .12); }
+@media (hover: hover) { .back:hover, .share:hover { background: rgba(255, 255, 255, .1); } }
+.toast {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 4px);
+  margin: 0;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(20, 13, 4, .85);
+  font-size: 13px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -4px);
+  transition: opacity .25s, transform .25s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
 .detail-day {
   margin: 0;
   text-align: center;
