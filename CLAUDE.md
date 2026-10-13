@@ -17,7 +17,7 @@ The site is plain HTML/CSS/JS (`index.html`, `style.css`, `app.js`) with no buil
 
 ## Architecture
 
-- **Board (home):** a hero section followed by an arch-shaped "출석 체크" board that replicates the printed attendance sheet (`attendance card.png`). Do not add a heart sticker; the user explicitly removed it.
+- **Board (home):** a hero section followed by an arch-shaped "출석 체크" board that replicates the printed attendance sheet (`source/attendance card.png`). Do not add a heart sticker; the user explicitly removed it.
   - The board's day circles are `<a href="#dayN">` links.
   - `app.js` intercepts clicks on them, calls `pushState`, and opens the detail view.
 - **Detail view** (`#detail`): a fixed overlay revealed with a `clip-path` circle that grows from the tapped day circle, and closes back into it.
@@ -48,10 +48,11 @@ The site is plain HTML/CSS/JS (`index.html`, `style.css`, `app.js`) with no buil
 
 - `assets/` holds the files the site serves. They were generated from the originals with Python/PIL:
   - `assets/cards/*.webp`: converted copies of `bible_cards/*.jpg`.
-  - `assets/bg.webp`: `horizontal poster.png` with its text patched out using clean texture, which leaves the texture and the handclasp. It is used as the fixed backdrop.
+  - `assets/bg.webp`: `source/horizontal poster.png` with its text patched out using clean texture, which leaves the texture and the handclasp. It is used as the fixed backdrop.
   - `assets/og.jpg`: the share image. `og:image` and `og:url` are absolute URLs under https://leemyeongje.github.io/2026thesarang/ (KakaoTalk previews need absolute URLs). The day pages get theirs from `SITE` in `tools/build_day_pages.py`.
+  - `assets/favicon.png` (64px) and `assets/apple-touch-icon.png` (180px): the THE symbol cropped from `source/thesr_logo.png` (x 0–469, y 167–544), recolored to `--cream` on an `--earth` rounded square.
 - If a card image changes, regenerate its webp (for example with PIL: `Image.open(src).convert('RGB').save(dst, quality=82)`).
-- The originals (`bible_cards/`, the poster, and the attendance photo) are source material and are not referenced by the page.
+- The originals in `source/` (the poster, the attendance photo, and the church logo) are not referenced by the page. `bible_cards/` is also source material, but the day pages use its `dayN_f.jpg` files as share images.
 
 ## Design language
 
