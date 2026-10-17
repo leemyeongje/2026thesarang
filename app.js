@@ -286,12 +286,12 @@ const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">"
 function inline(s) {
   let t = esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
   // "우리의 탄식: ..." 처럼 앞머리 소제목은 굵게
-  return t.replace(/^([^:<]{1,24}):\s+/, "<strong>$1</strong> ");
+  return t.replace(/^([^:<]{1,30}):\s+/, "<strong>$1</strong> ");
 }
 function parseSermon(md) {
   let videoId = null, html = "", list = false;
   const closeList = () => { if (list) { html += "</ul>"; list = false; } };
-  for (const raw of md.split(/\r?\n/)) {
+  for (const raw of md.normalize("NFC").split(/\r?\n/)) {
     const line = raw.trim();
     if (!line) continue;
     const yt = !videoId && line.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
